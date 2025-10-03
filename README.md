@@ -21,7 +21,7 @@ def linearRegression(X,Y):
     return w
 ```
 ### Linear Regression equation:  (AT*A)^-1 * (AT*Y)
-### I used Pinv to calculate the inverse because I was getting very large or small numbers which is indicative of an unstable calculation 
+I used Pinv to calculate the inverse because I was getting very large or small numbers which is indicative of an unstable calculation 
 
 ## Ridge Regression Implimentation
 ```python
@@ -51,5 +51,31 @@ def findBestFit(TX, TY, VX, VY,lambdas):
     print(f"Best λ = {bestLambda}, validation loss = {bestLoss}")
     return bestWeight, bestLambda
 ```
+
+The results I tended to get where an MSE of 8.5 for linear regression and a MSE of 8.4 for ridge regression 
+## Results for random shuffle of matrix
+```text
+--- Scikit-learn Comparison ---
+My Linear MSE     = 8.7949
+sklearn Linear MSE = 8.8020
+My Ridge MSE      = 8.7955 (λ=0.000100)
+sklearn Ridge MSE  = 8.7953 (λ=0.000100)
+
+My Linear R² = 0.9076
+sklearn Linear R² = 0.9067
+My Ridge R² = 0.9075
+sklearn Ridge R² = 0.9068
+```
+
+## Findings:
+#### My output is very simlar to scikit learn 
+#### Ridge regression seems to be slightly better at this scale due to adjusting the lambda.
+
+
+# How to run code :
+```text
+> python3 regeression_tests.py
+
+
 
 
