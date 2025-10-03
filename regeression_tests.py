@@ -1,6 +1,11 @@
 import numpy as np
 import pandas as pd
+from sklearn.metrics import r2_score as sk_r2
 
+def r2_score(y_true, y_pred):
+    ss_res = np.sum((y_true - y_pred) ** 2)
+    ss_tot = np.sum((y_true - np.mean(y_true, axis=0)) ** 2)
+    return 1 - ss_res/ss_tot
 
 def linearRegression(X,Y):
     A = np.insert(X,0,1,axis=1)#adding bias
@@ -97,9 +102,12 @@ if __name__ == "__main__":
     ridge_loss = np.sum((testY - ridge_y_pred) ** 2) / testY.size
     linear_loss = np.sum((testY - linear_y_pred) ** 2) / testY.size
 
+    linear_r2 = r2_score(testY, linear_y_pred)
+    ridge_r2 = r2_score(testY, ridge_y_pred)
 
     print(f"Linear MSE = {linear_loss:.4f}, Ridge MSE = {ridge_loss:.4f}")
-    
+    print(f"Linear R² = {linear_r2:.4f}, Ridge R² = {ridge_r2:.4f}")
+
         ### (5) Compare with scikit-learn
     from sklearn.linear_model import LinearRegression, Ridge
     from sklearn.metrics import mean_squared_error
@@ -121,6 +129,17 @@ if __name__ == "__main__":
     print(f"sklearn Linear MSE = {sk_linear_loss:.4f}")
     print(f"My Ridge MSE      = {ridge_loss:.4f} (λ={L:.6f})")
     print(f"sklearn Ridge MSE  = {sk_ridge_loss:.4f} (λ={L:.6f})")
+
+
+
+    sk_linear_r2 = sk_r2(testY, sk_linear_preds)
+    sk_ridge_r2 = sk_r2(testY, sk_ridge_preds)
+
+    print(f"\nMy Linear R² = {linear_r2:.4f}")
+    print(f"sklearn Linear R² = {sk_linear_r2:.4f}")
+    print(f"My Ridge R² = {ridge_r2:.4f}")
+    print(f"sklearn Ridge R² = {sk_ridge_r2:.4f}")
+
 
     
 
